@@ -1,0 +1,16 @@
+{
+  "name": "compare-npm-pnpm-and-yarn",
+  "version": "1.0.0",
+  "description": "## Title",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cli-table3": "^0.6.5",
+    "lodash": "^4.17.21"
+  }
+}
