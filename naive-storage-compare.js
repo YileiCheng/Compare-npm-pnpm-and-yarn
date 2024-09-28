@@ -7,17 +7,17 @@ const packageManagers = [
   {
     name: "npm",
     installCmd: "npm install lodash",
-    cleanupCmd: "rm -rf node_modules package-lock.json",
+    cleanupCmd: "rd /s /q node_modules && del /f /q package-lock.json",
   },
   {
     name: "pnpm",
     installCmd: "pnpm add lodash",
-    cleanupCmd: "rm -rf node_modules pnpm-lock.yaml",
+    cleanupCmd: "rd /s /q node_modules && del /f /q pnpm-lock.yaml",
   },
   {
     name: "yarn",
     installCmd: "yarn add lodash",
-    cleanupCmd: "rm -rf node_modules yarn.lock",
+    cleanupCmd: "rd /s /q node_modules && del /f /q yarn.lock",
   },
 ];
 
