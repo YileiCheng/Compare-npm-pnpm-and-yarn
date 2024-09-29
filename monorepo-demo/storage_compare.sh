@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 创建 monorepo 目录结构
-mkdir -p monorepo-demo/{npm-demo,pnpm-demo,yarn-demo}
+mkdir -p storage-monorepo-demo/{npm-demo,pnpm-demo,yarn-demo}
 cd monorepo-demo
 
 # 创建共享依赖的 package.json
