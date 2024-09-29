@@ -7,12 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "yileicheng <yilei.cheng.cyl@gmail.com>",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/YileiCheng/Compare-npm-pnpm-and-yarn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YileiCheng/Compare-npm-pnpm-and-yarn/issues"
+  },
+  "homepage": "https://github.com/YileiCheng/Compare-npm-pnpm-and-yarn#readme",
   "dependencies": {
     "cli-table3": "^0.6.5",
-    "express": "^4.21.0",
-    "lodash": "^4.17.21",
-    "react": "^18.3.1"
+    "lodash": "^4.17.21"
   }
 }

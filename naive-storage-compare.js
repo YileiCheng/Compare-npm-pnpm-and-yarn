@@ -7,30 +7,37 @@ const packageManagers = [
   {
     name: "npm",
     installCmd: "npm install lodash",
-    cleanupCmd: "rm -rf node_modules package-lock.json",
+    cleanupCmd: "node reset.js",
   },
   {
     name: "pnpm",
     installCmd: "pnpm add lodash",
-    cleanupCmd: "rm -rf node_modules pnpm-lock.yaml",
+    cleanupCmd: "node reset.js",
   },
   {
     name: "yarn",
     installCmd: "yarn add lodash",
-    cleanupCmd: "rm -rf node_modules yarn.lock",
+    cleanupCmd: "node reset.js",
   },
 ];
 
-const getFolderSize = (folderPath) => {
+const getFolderSize = (folderPath, processedInodes = new Set()) => {
   const stat = fs.statSync(folderPath);
   if (stat.isDirectory()) {
     const files = fs.readdirSync(folderPath);
     return files.reduce((total, file) => {
       const filePath = path.join(folderPath, file);
-      return total + getFolderSize(filePath);
+      return total + getFolderSize(filePath, processedInodes);
     }, 0);
+  } else {
+    const inode = stat.ino;
+    if (!processedInodes.has(inode)) {
+      processedInodes.add(inode);
+      return stat.size;
+    } else {
+      return 0;
+    }
   }
-  return stat.size;
 };
 
 const formatSizeUnits = (bytes) => {
