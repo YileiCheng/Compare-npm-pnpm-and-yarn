@@ -28,6 +28,9 @@ const timeInstall = (installCmd) => {
 };
 
 const results = packageManagers.map((pm) => {
+  console.log(`Cleaning up using: node reset.js`);
+  execSync("node reset.js");
+
   const avgTimeTaken = timeInstall(pm.installCmd);
   return { manager: pm.name, avgTime: avgTimeTaken };
 });

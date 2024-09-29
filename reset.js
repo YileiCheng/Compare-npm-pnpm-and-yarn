@@ -14,9 +14,9 @@ const clearCache = [
     cacheClearCmd: "npm cache clean --force",
   },
   {
-    name: "remove lock files",
+    name: "remove lock files, package.json, and node_modules",
     cacheClearCmd:
-      "rm -rf node_modules pnpm-lock.yaml yarn.lock npackage-lock.json package.json",
+      "rm -rf node_modules pnpm-lock.yaml yarn.lock package-lock.json package.json",
   },
   {
     name: "initialize pnpm",

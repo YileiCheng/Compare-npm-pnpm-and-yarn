@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/YileiCheng/Compare-npm-pnpm-and-yarn#readme",
   "dependencies": {
-    "cli-table3": "^0.6.5",
-    "lodash": "^4.17.21"
+    "cli-table3": "^0.6.5"
   }
 }

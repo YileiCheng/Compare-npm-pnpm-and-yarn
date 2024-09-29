@@ -21,6 +21,7 @@ const packageManagers = [
 
 const timeInstall = (installCmd, cleanupCmd) => {
   try {
+    console.log(`Cleaning up using: ${cleanupCmd}`);
     execSync(cleanupCmd);
 
     console.log(`Installing using: ${installCmd}`);
