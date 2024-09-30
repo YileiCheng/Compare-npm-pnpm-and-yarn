@@ -86,7 +86,7 @@ const results = [];
 
 for (const manager in commands) {
   const size = measureSize(manager, commands[manager]);
-  results.push({ packageManager: manager, sizeInMB: size.toFixed(2) + " MB" });
+  results.push({ packageManager: manager, sizeInMB: size.toFixed(4) + " MB" });
 }
 
 console.log("\n" + "Package Manager".padEnd(20) + "Size (MB)".padEnd(15));
