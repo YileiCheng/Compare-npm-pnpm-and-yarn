@@ -3,10 +3,9 @@ const fs = require("fs");
 const path = require("path");
 
 const commands = {
-  // pnpm: "pnpm add react",
   npm: "npm install react",
-  yarn: "yarn add react",
   pnpm: "pnpm add react",
+  yarn: "yarn add react",
 };
 
 function cleanUp() {
@@ -18,7 +17,6 @@ function cleanUp() {
 function getDirectorySize(dirPath, processedInodes = new Map()) {
   const stat = fs.statSync(dirPath);
 
-  // If the current path is a directory
   if (stat.isDirectory()) {
     const files = fs.readdirSync(dirPath);
     return files.reduce((total, file) => {
@@ -29,23 +27,16 @@ function getDirectorySize(dirPath, processedInodes = new Map()) {
   } else {
     const inode = stat.ino;
 
-    // Check if the inode has been processed before
     if (!processedInodes.has(inode)) {
-      // First time seeing this inode, add its size
       processedInodes.set(inode, 1);
       return stat.size;
     } else {
-      // Inode has been processed before, increment the count
       const count = processedInodes.get(inode);
       processedInodes.set(inode, count + 1);
 
-      console.log(stat.nlink);
-
       if (count === 1) {
-        // This is the second time we see the inode, subtract the size
         return -stat.size;
       } else {
-        // Any further occurrences, do nothing (return 0)
         return 0;
       }
     }
@@ -96,4 +87,4 @@ results.forEach((result) => {
   console.log(result.packageManager.padEnd(20) + result.sizeInMB.padEnd(15));
 });
 
-// cleanUp();
+cleanUp();

@@ -3,8 +3,8 @@ const fs = require("fs");
 const path = require("path");
 
 const commands = {
-  pnpm: "pnpm add react",
   npm: "npm install react",
+  pnpm: "pnpm add react",
   yarn: "yarn add react",
 };
 

@@ -1,8 +1,8 @@
 const { execSync } = require("child_process");
 
 const commands = {
-  pnpm: "pnpm add react",
   npm: "npm install react",
+  pnpm: "pnpm add react",
   yarn: "yarn add react",
 };
 
@@ -35,8 +35,8 @@ function measureTime(manager, command) {
       throw new Error("Invalid package manager");
   }
 
-  execSync(command);
-  execSync("rm -rf node_modules");
+  // execSync(command);
+  // execSync("rm -rf node_modules");
 
   const startTime = process.hrtime();
   execSync(command);
