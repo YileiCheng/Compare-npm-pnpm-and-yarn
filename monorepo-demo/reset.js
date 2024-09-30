@@ -1,9 +1,13 @@
 const { execSync } = require("child_process");
 
 const clearCache = [
+  // {
+  //   name: "clear cache for pnpm",
+  //   cacheClearCmd: "pnpm store prune",
+  // },
   {
-    name: "clear cache for pnpm",
-    cacheClearCmd: "pnpm store prune",
+    name: "clear global_store for pnpm",
+    cacheClearCmd: "rm -rf $(pnpm store path)",
   },
   {
     name: "clear cache for yarn",
@@ -18,22 +22,6 @@ const clearCache = [
     cacheClearCmd:
       "rm -rf node_modules pnpm-lock.yaml yarn.lock package-lock.json package.json",
   },
-  {
-    name: "initialize pnpm",
-    cacheClearCmd: "pnpm init",
-  },
-  {
-    name: "initialize yarn",
-    cacheClearCmd: "yarn init -y",
-  },
-  {
-    name: "initialize npm",
-    cacheClearCmd: "npm init -y",
-  },
-  // {
-  //   name: "install cli-table3",
-  //   cacheClearCmd: "npm install cli-table3",
-  // },
 ];
 
 clearCache.forEach((cm) => {
