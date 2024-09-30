@@ -1,13 +1,9 @@
 const { execSync } = require("child_process");
 
 const clearCache = [
-  // {
-  //   name: "clear cache for pnpm",
-  //   cacheClearCmd: "pnpm store prune",
-  // },
   {
-    name: "clear global_store for pnpm",
-    cacheClearCmd: "rm -rf $(pnpm store path)",
+    name: "clear cache for pnpm",
+    cacheClearCmd: "pnpm store prune",
   },
   {
     name: "clear cache for yarn",

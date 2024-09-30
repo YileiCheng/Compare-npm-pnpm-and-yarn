@@ -14,7 +14,7 @@ npm init -y
 # Install dependencies (npm)
 echo "Installing dependencies with npm..."
 start_time=$(date +%s%3N)
-npm install --save react react-dom lodash axios
+npm install react react-dom lodash axios
 end_time=$(date +%s%3N)
 npm_duration=$((end_time - start_time))
 
