@@ -1,5 +1,6 @@
 const { execSync } = require("child_process");
 
+// more packages to add: react-dom lodash axios express
 const commands = {
   npm: "npm install react",
   pnpm: "pnpm add react",
@@ -35,6 +36,8 @@ function measureTime(manager, command) {
       throw new Error("Invalid package manager");
   }
 
+  // If this two lines is uncommented, install cmd will be run to create nm and cache, 
+  // then nm will be deleted, leaving cache for npm's cache-copy and pnpm's hard-link testing
   // execSync(command);
   // execSync("rm -rf node_modules");
 
