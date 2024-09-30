@@ -37,3 +37,9 @@ results.forEach((result) => {
 });
 
 console.log(table.toString());
+
+execSync(
+  "rm -rf node_modules package-lock.json package.json pnpm-lock.yaml yarn.lock",
+  { stdio: "ignore" }
+);
+execSync("pnpm add cli-table3", { stdio: "ignore" });
