@@ -12,6 +12,12 @@ function cleanUp() {
   );
 }
 
+function cleanUpCache() {
+  execSync("pnpm store prune");
+  execSync("npm cache clean --force");
+  execSync("yarn cache clean");
+}
+
 function measureTime(manager, command) {
   cleanUp();
 
@@ -29,8 +35,8 @@ function measureTime(manager, command) {
       throw new Error("Invalid package manager");
   }
 
-  // execSync(command);
-  // execSync("rm -rf node_modules");
+  execSync(command);
+  execSync("rm -rf node_modules");
 
   const startTime = process.hrtime();
   execSync(command);
@@ -58,3 +64,4 @@ results.forEach((result) => {
 });
 
 cleanUp();
+cleanUpCache();

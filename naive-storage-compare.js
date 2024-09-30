@@ -1,89 +1,71 @@
 const { execSync } = require("child_process");
-const Table = require("cli-table3");
 const fs = require("fs");
 const path = require("path");
 
-const packageManagers = [
-  {
-    name: "npm",
-    installCmd: "npm install lodash",
-    cleanupCmd: "node reset.js",
-  },
-  {
-    name: "pnpm",
-    installCmd: "pnpm add lodash",
-    cleanupCmd: "node reset.js",
-  },
-  {
-    name: "yarn",
-    installCmd: "yarn add lodash",
-    cleanupCmd: "node reset.js",
-  },
-];
+const commands = {
+  pnpm: "pnpm add react",
+  npm: "npm install react",
+  yarn: "yarn add react",
+};
 
-const getFolderSize = (folderPath, processedInodes = new Set()) => {
-  const stat = fs.statSync(folderPath);
+function cleanUp() {
+  execSync(
+    "rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock package.json"
+  );
+}
+
+function getDirectorySize(dirPath) {
+  const stat = fs.statSync(dirPath);
   if (stat.isDirectory()) {
-    const files = fs.readdirSync(folderPath);
+    const files = fs.readdirSync(dirPath);
     return files.reduce((total, file) => {
-      const filePath = path.join(folderPath, file);
-      return total + getFolderSize(filePath, processedInodes);
+      return total + getDirectorySize(path.join(dirPath, file));
     }, 0);
   } else {
-    const inode = stat.ino;
-    if (!processedInodes.has(inode)) {
-      processedInodes.add(inode);
-      return stat.size;
-    } else {
-      return 0;
-    }
+    return stat.size;
   }
-};
+}
 
-const formatSizeUnits = (bytes) => {
-  if (bytes >= 1e9) {
-    return (bytes / 1e9).toFixed(2) + " GB";
-  } else if (bytes >= 1e6) {
-    return (bytes / 1e6).toFixed(2) + " MB";
-  } else if (bytes >= 1e3) {
-    return (bytes / 1e3).toFixed(2) + " KB";
+function measureSize(manager, command) {
+  cleanUp();
+
+  switch (manager) {
+    case "pnpm":
+      execSync("pnpm init");
+      break;
+    case "npm":
+      execSync("npm init -y");
+      break;
+    case "yarn":
+      execSync("yarn init -y");
+      break;
+    default:
+      throw new Error("Invalid package manager");
+  }
+
+  execSync(command);
+
+  const nodeModulesPath = path.join(process.cwd(), "node_modules");
+
+  if (fs.existsSync(nodeModulesPath)) {
+    return getDirectorySize(nodeModulesPath) / (1024 * 1024); // Convert to MB
   } else {
-    return bytes + " B";
+    return 0;
   }
-};
+}
 
-const measureStorage = (installCmd, cleanupCmd) => {
-  try {
-    console.log(`Cleaning up using: ${cleanupCmd}`);
-    execSync(cleanupCmd);
+const results = [];
 
-    console.log(`Installing using: ${installCmd}`);
-    execSync(installCmd, { stdio: "ignore" });
+for (const manager in commands) {
+  const size = measureSize(manager, commands[manager]);
+  results.push({ packageManager: manager, sizeInMB: size.toFixed(2) + " MB" });
+}
 
-    const nodeModulesPath = path.join(__dirname, "node_modules");
-    const size = getFolderSize(nodeModulesPath);
-    return size;
-  } catch (error) {
-    console.error(`Error while running ${installCmd}:`, error);
-    return null;
-  }
-};
-
-const results = packageManagers.map((pm) => {
-  const size = measureStorage(pm.installCmd, pm.cleanupCmd);
-  return { manager: pm.name, size };
-});
-
-const table = new Table({
-  head: ["Package Manager", "Node Modules Size"],
-  colWidths: [20, 30],
-});
+console.log("\n" + "Package Manager".padEnd(20) + "Size (MB)".padEnd(15));
+console.log("-".repeat(35));
 
 results.forEach((result) => {
-  table.push([
-    result.manager,
-    result.size ? formatSizeUnits(result.size) : "Error",
-  ]);
+  console.log(result.packageManager.padEnd(20) + result.sizeInMB.padEnd(15));
 });
 
-console.log(table.toString());
+cleanUp();
