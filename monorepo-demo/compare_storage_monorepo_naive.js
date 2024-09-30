@@ -30,7 +30,7 @@ const installDependencies = (manager) => {
     } else {
       command = `${manager} install --save react react-dom lodash axios`;
     }
-    exec(command, { cwd: path.join(__dirname, `${manager}-demo`) }, (error) => {
+    exec(command, { cwd: path.join(__dirname, `storage-monorepo-demo/${manager}-demo`) }, (error) => {
       if (error) return reject(error);
       resolve();
     });
@@ -40,7 +40,7 @@ const installDependencies = (manager) => {
 // 获取 node_modules 大小
 const getNodeModulesSize = (manager) => {
   return new Promise((resolve, reject) => {
-    const dirPath = path.join(__dirname, `${manager}-demo/node_modules`);
+    const dirPath = path.join(__dirname, `storage-monorepo-demo/${manager}-demo/node_modules`);
     try {
       const isPnpm = manager === 'pnpm';
       const size = getDirectorySize(dirPath, isPnpm); // 排除 pnpm 的硬链接
