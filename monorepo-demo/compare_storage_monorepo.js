@@ -15,8 +15,13 @@ const getDirectorySize = (dir, excludeHardLinks = false) => {
       totalSize += getDirectorySize(filePath, excludeHardLinks); // Recursively calculate size of subdirectories
     } else {
       // If excluding hard links, check reference count
-      if (excludeHardLinks && stat.nlink > 1) {
-        return; // Skip hard links
+      if (excludeHardLinks) {
+        if(stat.nlink > 1){
+          return; // Skip hard links
+        } 
+        // else {
+        //   console.log("not skipped: ", filePath); // print files counted in pnpm storage
+        // }
       }
       totalSize += stat.size; // Calculate file size
     }
