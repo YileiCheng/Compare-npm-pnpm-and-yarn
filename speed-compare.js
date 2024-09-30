@@ -1,15 +1,14 @@
 const { execSync } = require("child_process");
 
 const commands = {
-  pnpm: "pnpm add lodash",
-  npm: "npm install lodash",
-  yarn: "yarn add lodash",
+  pnpm: "pnpm add react",
+  npm: "npm install react",
+  yarn: "yarn add react",
 };
 
 function cleanUp() {
   execSync(
-    "rm -rf node_modules package-lock.json package.json pnpm-lock.yaml yarn.lock",
-    { stdio: "ignore" }
+    "rm -rf node_modules package-lock.json package.json pnpm-lock.yaml yarn.lock"
   );
 }
 
@@ -30,8 +29,11 @@ function measureTime(manager, command) {
       throw new Error("Invalid package manager");
   }
 
+  // execSync(command);
+  // execSync("rm -rf node_modules");
+
   const startTime = process.hrtime();
-  execSync(command, { stdio: "ignore" });
+  execSync(command);
   const endTime = process.hrtime(startTime);
 
   const timeInSeconds = endTime[0] + endTime[1] / 1e9;
