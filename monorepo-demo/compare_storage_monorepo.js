@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// 计算目录大小的函数
+// Function to calculate directory size
 const getDirectorySize = (dir, excludeHardLinks = false) => {
   let totalSize = 0;
 
@@ -12,20 +12,20 @@ const getDirectorySize = (dir, excludeHardLinks = false) => {
     const stat = fs.statSync(filePath);
     
     if (stat.isDirectory()) {
-      totalSize += getDirectorySize(filePath, excludeHardLinks); // 递归计算子目录大小
+      totalSize += getDirectorySize(filePath, excludeHardLinks); // Recursively calculate size of subdirectories
     } else {
-      // 如果要排除硬链接，检查引用计数
+      // If excluding hard links, check reference count
       if (excludeHardLinks && stat.nlink > 1) {
-        return; // 跳过硬链接
+        return; // Skip hard links
       }
-      totalSize += stat.size; // 计算文件大小
+      totalSize += stat.size; // Calculate file size
     }
   });
 
   return totalSize;
 };
 
-// 安装依赖
+// Install dependencies
 const installDependencies = (manager) => {
   return new Promise((resolve, reject) => {
     let command;
@@ -41,41 +41,41 @@ const installDependencies = (manager) => {
   });
 };
 
-// 获取 node_modules 大小
+// Get size of node_modules
 const getNodeModulesSize = (manager) => {
   return new Promise((resolve, reject) => {
     const dirPath = path.join(__dirname, `storage-monorepo-demo/${manager}-demo/node_modules`);
     try {
       const isPnpm = manager === 'pnpm';
-      const size = getDirectorySize(dirPath, isPnpm); // 排除 pnpm 的硬链接
-      resolve((size / (1024 * 1024)).toFixed(2) + ' MB'); // 转换为 MB
+      const size = getDirectorySize(dirPath, isPnpm); // Exclude pnpm hard links
+      resolve((size / (1024 * 1024)).toFixed(2) + ' MB'); // Convert to MB
     } catch (error) {
       reject(error);
     }
   });
 };
 
-// 主函数
+// Main function
 const main = async () => {
   try {
-    // 安装依赖（如果需要的话）
+    // Install dependencies (if needed)
     await installDependencies('npm');
     await installDependencies('pnpm');
     await installDependencies('yarn');
 
-    // 获取 node_modules 大小
+    // Get size of node_modules
     const npmSize = await getNodeModulesSize('npm');
     const pnpmSize = await getNodeModulesSize('pnpm');
     const yarnSize = await getNodeModulesSize('yarn');
 
-    // 打印结果表格
-    console.log('\n| 工具  | node_modules 大小 |');
-    console.log('|-------|-------------------|');
-    console.log(`| npm   | ${npmSize}      |`);
-    console.log(`| pnpm  | ${pnpmSize}     |`);
-    console.log(`| yarn  | ${yarnSize}     |`);
+    // Print result table
+    console.log('\n| Tool  | node_modules Size  |');
+    console.log('|-------|--------------------|');
+    console.log(`| npm   | ${npmSize}            |`);
+    console.log(`| pnpm  | ${pnpmSize}            |`);
+    console.log(`| yarn  | ${yarnSize}            |`);
   } catch (error) {
-    console.error('发生错误:', error);
+    console.error('An error occurred:', error);
   }
 };
 
