@@ -71,9 +71,9 @@ const main = async () => {
     // Print result table
     console.log('\n| Tool  | node_modules Size  |');
     console.log('|-------|--------------------|');
-    console.log(`| npm   | ${npmSize}         |`);
-    console.log(`| pnpm  | ${pnpmSize}         |`);
-    console.log(`| yarn  | ${yarnSize}         |`);
+    console.log(`| npm   | ${npmSize}            |`);
+    console.log(`| pnpm  | ${pnpmSize}            |`);
+    console.log(`| yarn  | ${yarnSize}            |`);
   } catch (error) {
     console.error('An error occurred:', error);
   }
