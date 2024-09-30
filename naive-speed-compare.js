@@ -1,10 +1,9 @@
 const { execSync } = require("child_process");
-const Table = require("cli-table3");
 
 const commands = {
-  pnpm: "pnpm add react",
-  npm: "npm install react",
-  yarn: "yarn add react",
+  pnpm: "pnpm add lodash",
+  npm: "npm install lodash",
+  yarn: "yarn add lodash",
 };
 
 function cleanUp() {
@@ -14,8 +13,22 @@ function cleanUp() {
   );
 }
 
-function measureTime(command) {
+function measureTime(manager, command) {
   cleanUp();
+
+  switch (manager) {
+    case "pnpm":
+      execSync("pnpm init");
+      break;
+    case "npm":
+      execSync("npm init -y");
+      break;
+    case "yarn":
+      execSync("yarn init -y");
+      break;
+    default:
+      throw new Error("Invalid package manager");
+  }
 
   const startTime = process.hrtime();
   execSync(command, { stdio: "ignore" });
@@ -28,20 +41,18 @@ function measureTime(command) {
 const results = [];
 
 for (const manager in commands) {
-  const time = measureTime(commands[manager]);
+  const time = measureTime(manager, commands[manager]);
   results.push({ packageManager: manager, timeInSeconds: time });
 }
 
-const table = new Table({
-  head: ["Package Manager", "Time (seconds)"],
-  colWidths: [20, 15],
-});
+console.log("\n" + "Package Manager".padEnd(20) + "Time (seconds)".padEnd(15));
+console.log("-".repeat(35));
 
 results.forEach((result) => {
-  table.push([result.packageManager, result.timeInSeconds.toFixed(2) + "s"]);
+  console.log(
+    result.packageManager.padEnd(20) +
+      result.timeInSeconds.toFixed(2).padEnd(15)
+  );
 });
 
-console.log(table.toString());
-
 cleanUp();
-execSync("pnpm add cli-table3", { stdio: "ignore" });
