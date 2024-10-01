@@ -91,10 +91,10 @@ cleanUp();
 
 const asciiArt = `
 PPPP   N   N  PPPP   M   M      III  SSSS       TTTTT  H   H  EEEEE        BBBB  EEEEE  SSSS  TTTTT !
-P   P  NN  N  P   P  MM MM       I   S           T    H   H  E            B   B E      S       T   !
-PPPP   N N N  PPPP   M M M       I   SSS         T    HHHHH  EEEE         BBBB  EEEE   SSS     T   !
-P      N  NN  P      M   M       I      S        T    H   H  E            B   B E         S    T   !
-P      N   N  P      M   M      III  SSSS        T    H   H  EEEEE        BBBB  EEEEE  SSSS    T   !
+P   P  NN  N  P   P  MM MM       I   S            T    H   H  E            B   B E      S       T   !
+PPPP   N N N  PPPP   M M M       I   SSS          T    HHHHH  EEEE         BBBB  EEEE   SSS     T   !
+P      N  NN  P      M   M       I      S         T    H   H  E            B   B E         S    T   !
+P      N   N  P      M   M      III  SSSS         T    H   H  EEEEE        BBBB  EEEEE  SSSS    T   !
 `;
 
 console.log(asciiArt);
