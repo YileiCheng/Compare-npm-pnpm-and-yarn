@@ -2,9 +2,15 @@ const { execSync } = require("child_process");
 
 const commands = {
   npm: "npm install react",
-  pnpm: "pnpm add react",
   yarn: "yarn add react",
+  pnpm: "pnpm add react",
 };
+
+// const commands = {
+//   npm: "npm install react react-dom lodash axios express",
+//   pnpm: "pnpm add react react-dom lodash axios express",
+//   yarn: "yarn add react react-dom lodash axios express",
+// };
 
 function cleanUp() {
   execSync(
