@@ -3,9 +3,9 @@ const fs = require("fs");
 const path = require("path");
 
 const commands = {
-  npm: "npm install react",
-  pnpm: "pnpm add react",
-  yarn: "yarn add react",
+  npm: "npm install react react-dom lodash axios express",
+  pnpm: "pnpm add react react-dom lodash axios express",
+  yarn: "yarn add react react-dom lodash axios express",
 };
 
 function cleanUp() {

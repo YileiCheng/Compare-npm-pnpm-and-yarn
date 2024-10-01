@@ -4,8 +4,8 @@ const path = "speed-compare-results.csv";
 
 const commands = {
   npm: "npm install react",
-  pnpm: "pnpm add react",
   yarn: "yarn add react",
+  pnpm: "pnpm add react",
 };
 
 const commands_plus = {
