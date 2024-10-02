@@ -8,12 +8,6 @@ const commands = {
   yarn: "yarn add react",
 };
 
-function cleanUp() {
-  execSync(
-    "rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock package.json"
-  );
-}
-
 function getDirectorySize(dirPath, processedInodes = new Set()) {
   const stat = fs.statSync(dirPath);
 
@@ -79,4 +73,17 @@ results.forEach((result) => {
   console.log(result.packageManager.padEnd(20) + result.sizeInMB.padEnd(15));
 });
 
+function cleanUp() {
+  execSync(
+    "rm -rf node_modules package-lock.json package.json pnpm-lock.yaml yarn.lock"
+  );
+}
+
+function cleanUpCache() {
+  execSync("pnpm store prune");
+  execSync("npm cache clean --force");
+  execSync("yarn cache clean");
+}
+
 cleanUp();
+cleanUpCache();

@@ -8,12 +8,6 @@ const commands = {
   yarn: "yarn add react react-dom lodash axios express",
 };
 
-function cleanUp() {
-  execSync(
-    "rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock package.json"
-  );
-}
-
 function getDirectorySize(dirPath, processedInodes = new Map()) {
   const stat = fs.statSync(dirPath);
 
@@ -87,7 +81,20 @@ results.forEach((result) => {
   console.log(result.packageManager.padEnd(20) + result.sizeInMB.padEnd(15));
 });
 
+function cleanUp() {
+  execSync(
+    "rm -rf node_modules package-lock.json package.json pnpm-lock.yaml yarn.lock"
+  );
+}
+
+function cleanUpCache() {
+  execSync("pnpm store prune");
+  execSync("npm cache clean --force");
+  execSync("yarn cache clean");
+}
+
 cleanUp();
+cleanUpCache();
 
 const asciiArt = `
 PPPP   N   N  PPPP   M   M      III  SSSS       TTTTT  H   H  EEEEE        BBBB  EEEEE  SSSS  TTTTT !
